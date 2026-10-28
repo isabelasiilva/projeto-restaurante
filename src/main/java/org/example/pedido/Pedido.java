@@ -1,13 +1,17 @@
 package org.example.pedido;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.example.cardapio.Lanche;
 
 import java.util.ArrayList;
 
+@Getter
+@Setter
+//cuida de uma comanda só
 public class Pedido {
     private int numero;
-    @Getter private String cliente;
+    private String cliente;
 
     ArrayList<Lanche> itens = new ArrayList<>();
 
@@ -28,8 +32,8 @@ public class Pedido {
 
     public double calcularTotal() {
         double total = 0;
-        for (int i = 0; i < itens.size(); i++) {
-            total += itens.get(i).getPreco();
+        for  (Lanche lanche : itens) {
+            total += lanche.getPreco();
         }
         return total;
     }
