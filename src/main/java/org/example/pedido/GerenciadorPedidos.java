@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 //guarda todos os pedidos do restaurante
 public class GerenciadorPedidos {
-    private int numeroPedido;
     private int contadorPedidos = 1;
     private HashMap<Integer, Pedido> pedidos = new HashMap<>();
 
@@ -23,10 +22,8 @@ public class GerenciadorPedidos {
         }
     }
 
-    public void getPedidos() {
-        for (Pedido pedido : pedidos.values()) {
-            System.out.println(pedido);
-        }
+    public HashMap<Integer, Pedido> getPedidos() {
+        return this.pedidos;
     }
 
     public double calcularTotalDoDia() {
