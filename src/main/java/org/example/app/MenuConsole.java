@@ -91,19 +91,19 @@ public class MenuConsole {
     }
 
     private boolean perguntarAdicionarMais() {
-        while (true) {
+//        while (true) {
             System.out.print("Deseja adicionar mais um item?\n1- SIM \n2- NÃO: ");
             String resposta = sc.nextLine().trim();
 
-            switch (resposta) {
-                case "1":
-                    return true;
-                case "2":
-                    return false;
-                default:
-                    System.out.println("Resposta Invalida!");
+            if (resposta.equals("1")) {
+                return true;
+            } else if (resposta.equals("2")) {
+                return false;
+            } else {
+                System.out.println("Resposta Invalida!");
+                return false;
             }
-        }
+//        }
     }
 
     void listarPedidosDoDia() {
