@@ -255,12 +255,16 @@ public class MenuConsole {
         int pedidoParaAlterar = sc.nextInt();
         sc.nextLine();
 
-        RestauranteFacade facadePedidoParaAlterar = new RestauranteFacade();
-        Pedido pedidoAlterar = facadePedidoParaAlterar.getGerenciadorPedidos().buscarPedido(pedidoParaAlterar);
+
+        Pedido pedidoAlterar = restauranteFacade.buscarPedido(pedidoParaAlterar);
 
         if (pedidoAlterar == null) {
             System.out.println("Pedido não encontrado.");
         } else {
+            System.out.println("Listando pedido:");
+            exibirPedido(pedidoAlterar);
+            System.out.println();
+
             System.out.println("Digite a opção desejada para modificar o pedido");
             System.out.println("1- Adicionar item");
             System.out.println("2- Remover item");
@@ -310,6 +314,7 @@ public class MenuConsole {
         System.out.println("Digite o número do item que deseja remover: ");
         int indice = sc.nextInt();
         sc.nextLine();
+        indice = indice - 1; // correçao de ordem no List
 
         if (indice >= 0 && indice < itens.size()) {
             restauranteFacade.removerItemDoPedido(pedido.getNumero(), indice);
