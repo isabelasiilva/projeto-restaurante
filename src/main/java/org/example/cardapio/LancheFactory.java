@@ -1,6 +1,4 @@
-package org.example.cardapio.factory;
-
-import org.example.cardapio.Lanche;
+package org.example.cardapio;
 
 public class LancheFactory {
     public static Lanche xBurger() {

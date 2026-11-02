@@ -2,7 +2,7 @@ package org.example.app;
 
 import org.example.cardapio.ItemCardapio;
 import org.example.cardapio.Lanche;
-import org.example.cardapio.factory.LancheFactory;
+import org.example.cardapio.LancheFactory;
 import org.example.pedido.GerenciadorPedidos;
 import org.example.pedido.Pedido;
 

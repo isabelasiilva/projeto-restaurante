@@ -1,7 +1,7 @@
 import org.example.cardapio.ComCheddar;
 import org.example.cardapio.ItemCardapio;
 import org.example.cardapio.Lanche;
-import org.example.cardapio.factory.LancheFactory;
+import org.example.cardapio.LancheFactory;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
