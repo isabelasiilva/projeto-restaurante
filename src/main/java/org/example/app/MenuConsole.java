@@ -79,8 +79,22 @@ public class MenuConsole {
         System.out.println("2. X-Salada — R$ 18,00");
         System.out.println("3. X-Bacon  — R$ 22,00");
         System.out.print("Escolha o lanche: ");
-        return Integer.parseInt(sc.nextLine()); // tratar erro se inserir string
+
+        return lerInteiro(); // tratar erro se inserir string
     }
+
+    private int lerInteiro() {
+        while (true) {
+            String linha = sc.nextLine();
+
+            if (linha.trim().equals("1") || linha.trim().equals("2") || linha.trim().equals("3")) {
+                return Integer.parseInt(linha);
+            } else {
+                System.out.println("Entrada inválida! Digite um número de 1 a 3.");
+            }
+        }
+    }
+
 
     public void adicionarItemNoPedido(Pedido pedido) {
         boolean adicionarItem = true;
@@ -304,7 +318,6 @@ public class MenuConsole {
             System.out.println("Item inválido.");
         }
     }
-
 
 
 }

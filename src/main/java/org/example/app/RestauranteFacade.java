@@ -37,6 +37,10 @@ public class RestauranteFacade {
         return gerenciadorPedidos.calcularTotalDoDia();
     }
 
+    public Pedido buscarPedido(int numero) {
+        return gerenciadorPedidos.buscarPedido(numero);
+    }
+
     public void removerItemDoPedido(int numeroPedido, int indiceItem) {
         Pedido pedido = gerenciadorPedidos.buscarPedido(numeroPedido);
         if (pedido != null) {
