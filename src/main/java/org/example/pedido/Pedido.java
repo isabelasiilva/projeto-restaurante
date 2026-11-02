@@ -2,9 +2,10 @@ package org.example.pedido;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.example.cardapio.Lanche;
+import org.example.cardapio.ItemCardapio;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -13,26 +14,24 @@ public class Pedido {
     private int numero;
     private String cliente;
 
-    ArrayList<Lanche> itens = new ArrayList<>();
+    ArrayList<ItemCardapio> itens = new ArrayList<>();
 
     public Pedido(int numero, String cliente) {
         this.numero = numero;
         setCliente(cliente);
     }
 
-    public void adicionarItem(Lanche lanche) {
-        itens.add(lanche);
+    public void adicionarItem(ItemCardapio item) {
+        itens.add(item);
     }
 
-    public void getItens() {
-        for (int i = 0; i < itens.size(); i++) {
-            System.out.println("Pedido " + (i + 1) + itens.get(i));
-        }
+    public List<ItemCardapio> getItens() {
+        return itens;
     }
 
     public double calcularTotal() {
         double total = 0;
-        for  (Lanche lanche : itens) {
+        for  (ItemCardapio lanche : itens) {
             total += lanche.getPreco();
         }
         return total;

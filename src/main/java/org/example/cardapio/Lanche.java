@@ -3,7 +3,7 @@ package org.example.cardapio;
 import lombok.Getter;
 
 @Getter
-public class Lanche {
+public class Lanche implements ItemCardapio{
     private String nome;
     private double preco;
 
@@ -24,5 +24,10 @@ public class Lanche {
             throw new IllegalArgumentException ("Preço não pode ser negativo");
         }
         this.preco = preco;
+    }
+
+    @Override
+    public String getDescricao() {
+        return nome;
     }
 }

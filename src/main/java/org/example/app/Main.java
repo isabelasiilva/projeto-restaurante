@@ -1,16 +1,14 @@
 package org.example.app;
 
-import org.example.cardapio.Lanche;
-import org.example.pedido.Pedido;
-
 public class Main {
     public static void main(String[] args) {
-        Lanche lanche = new Lanche( "aa", 30);
-        Pedido pedido = new Pedido( 0 , "aa" );
+//        GerenciadorPedidos gerenciadorPedidos = new GerenciadorPedidos();
+//        double total = gerenciadorPedidos.calcularTotalDoDia();
 
-        pedido.adicionarItem(lanche);
-        pedido.getItens();
-        System.out.println(pedido.calcularTotal());
-        System.out.println("aaaaa");
+        RestauranteFacade sistema = new RestauranteFacade();
+        MenuConsole menu = new MenuConsole(sistema);
+        menu.exibirMenu();
+
+//        menu.exibirFechamentoDoDia(total);
     }
 }
