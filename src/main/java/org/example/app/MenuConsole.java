@@ -78,23 +78,16 @@ public class MenuConsole {
         System.out.println("1. X-Burger — R$ 16,00");
         System.out.println("2. X-Salada — R$ 18,00");
         System.out.println("3. X-Bacon  — R$ 22,00");
-        System.out.print("Escolha o lanche: ");
+//        System.out.print("Escolha o lanche: ");
 
-        return lerInteiro(); // tratar erro se inserir string
-    }
-
-    private int lerInteiro() {
         while (true) {
-            String linha = sc.nextLine();
-
-            if (linha.trim().equals("1") || linha.trim().equals("2") || linha.trim().equals("3")) {
-                return Integer.parseInt(linha);
-            } else {
-                System.out.println("Entrada inválida! Digite um número de 1 a 3.");
+            int opcaoLanche = lerInteiroTratandoErro("Escolha o lanche: ");
+            if (opcaoLanche >= 1 && opcaoLanche <= 3) {
+                return opcaoLanche;
             }
+            System.out.println("Opção inválida! Escolha entre 1 e 3.");
         }
     }
-
 
     public void adicionarItemNoPedido(Pedido pedido) {
         boolean adicionarItem = true;
@@ -114,72 +107,40 @@ public class MenuConsole {
     }
 
     private void retirarIngrediente(Lanche lancheEscolhidoNoMostrarCardapio) {
-        System.out.println("Deseja retirar queijo? 1-SIM 2-NÃO");
-        String opcaoQueijo = sc.nextLine();
-        switch (opcaoQueijo) {
-            case "1":
-                lancheEscolhidoNoMostrarCardapio.setQueijo(false);
-                break;
-            case "2":
-                break;
-            default:
-                System.out.println("Opção inválida!");
-                break;
-        }
-        System.out.println("Deseja retirar alface? 1-SIM 2-NÃO");
-        String opcaoAlface = sc.nextLine();
-        switch (opcaoAlface) {
-            case "1":
-                lancheEscolhidoNoMostrarCardapio.setAlface(false);
-                break;
-            case "2":
-                break;
-            default:
-                System.out.println("Opção inválida!");
-                break;
+        if (perguntarSimNao("Deseja retirar queijo?")) {
+            System.out.println("Retirando o queijo");
+            lancheEscolhidoNoMostrarCardapio.setQueijo(false);
         }
 
-        System.out.println("Deseja retirar tomate? 1-SIM 2-NÃO");
-        String opcaoTomate = sc.nextLine();
-        switch (opcaoTomate) {
-            case "1":
-                lancheEscolhidoNoMostrarCardapio.setTomate(false);
-                break;
-            case "2":
-                break;
-            default:
-                System.out.println("Opção inválida!");
-                break;
+        if (perguntarSimNao("Deseja retirar alface?")) {
+            System.out.println("Retirando a alface");
+            lancheEscolhidoNoMostrarCardapio.setAlface(false);
         }
 
-        System.out.println("Deseja retirar cebola? 1-SIM 2-NÃO");
-        String opcaoCebola = sc.nextLine();
-        switch (opcaoCebola) {
-            case "1":
-                lancheEscolhidoNoMostrarCardapio.setCebola(false);
-                break;
-            case "2":
-                break;
-            default:
-                System.out.println("Opção inválida!");
-                break;
+        if (perguntarSimNao("Deseja retirar tomate?")) {
+            System.out.println("Retirando o tomate");
+            lancheEscolhidoNoMostrarCardapio.setTomate(false);
+        }
+
+        if (perguntarSimNao("Deseja retirar cebola?")) {
+            System.out.println("Retirando a cebola");
+            lancheEscolhidoNoMostrarCardapio.setCebola(false);
         }
     }
 
     private boolean perguntarAdicionarMais() {
-//        while (true) {
-        System.out.print("Deseja adicionar mais um item?\n1- SIM \n2- NÃO: ");
-        String resposta = sc.nextLine().trim();
+        while (true) {
+            System.out.print("Deseja adicionar mais um item?\n1- SIM \n2- NÃO: ");
+            String resposta = sc.nextLine().trim();
 
-        if (resposta.equals("1")) {
-            return true;
-        } else if (resposta.equals("2")) {
-            return false;
-        } else {
-            System.out.println("Resposta Invalida!");
-            return false;
+            if (resposta.equals("1")) {
+                return true;
+            } else if (resposta.equals("2")) {
+                return false;
+            } else {
+                System.out.println("Resposta Invalida! Digite 1 ou 2");
+            }
         }
-//        }
     }
 
     void listarPedidosDoDia() {
@@ -222,39 +183,19 @@ public class MenuConsole {
     }
 
     private ItemCardapio perguntarAdicionais(ItemCardapio item) {
-        System.out.print("Deseja adicionar cheddar?\n1- SIM \n2- NÃO: ");
-        String resposta = sc.nextLine().trim();
-
-        switch (resposta) {
-            case "1":
-                item = new ComCheddar(item);
-                break;
-            case "2":
-                break;
-            default:
-                System.out.println("Resposta Invalida!");
+        if (perguntarSimNao("Deseja adicionar cheddar?")) {
+            item = new ComCheddar(item);
         }
 
-        System.out.print("Deseja adicionar bacon extra?\n1- SIM \n2- NÃO: ");
-        resposta = sc.nextLine().trim();
-        switch (resposta) {
-            case "1":
-                item = new ComBaconExtra(item);
-                break;
-            case "2":
-                break;
-            default:
-                System.out.println("Resposta Invalida!");
+        if (perguntarSimNao("Deseja adicionar bacon extra?")) {
+            item = new ComBaconExtra(item);
         }
 
         return item;
     }
 
     private void modificarPedido() {
-        System.out.println("Digite qual é o número do seu pedido");
-        int pedidoParaAlterar = sc.nextInt();
-        sc.nextLine();
-
+        int pedidoParaAlterar = lerInteiroTratandoErro("Digite qual é o número do seu pedido: ");
 
         Pedido pedidoAlterar = restauranteFacade.buscarPedido(pedidoParaAlterar);
 
@@ -271,8 +212,7 @@ public class MenuConsole {
             System.out.println("3- Cancelar pedido");
             System.out.println("0- Voltar");
 
-            int opcaoAlterarItem = sc.nextInt();
-            sc.nextLine();
+            int opcaoAlterarItem = lerInteiroTratandoErro("Escolha uma opção: ");
 
             switch (opcaoAlterarItem) {
                 case 0:
@@ -297,7 +237,6 @@ public class MenuConsole {
         }
     }
 
-
     private void removerItemDoPedido(Pedido pedido) {
         List<ItemCardapio> itens = pedido.getItens();
 
@@ -311,9 +250,7 @@ public class MenuConsole {
             System.out.println((i + 1) + ". " + itens.get(i).getDescricao());
         }
 
-        System.out.println("Digite o número do item que deseja remover: ");
-        int indice = sc.nextInt();
-        sc.nextLine();
+        int indice = lerInteiroTratandoErro("Digite o número do item que deseja remover: ");
         indice = indice - 1; // correçao de ordem no List
 
         if (indice >= 0 && indice < itens.size()) {
@@ -324,6 +261,35 @@ public class MenuConsole {
         }
     }
 
+    private int lerInteiroTratandoErro(String mensagem) {
+        while (true) {
+            System.out.print(mensagem);
+            String linha = sc.nextLine().trim();
 
+            try {
+                return Integer.parseInt(linha);
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida! Digite um número.");
+            }
+        }
+
+
+    }
+
+    private boolean perguntarSimNao(String pergunta) {
+        System.out.print(pergunta + " 1-SIM 2-NÃO: ");
+        String resposta = sc.nextLine().trim();
+
+        while (true) {
+            if (resposta.equals("1")) {
+                return true;
+            }
+            if (resposta.equals("2")) {
+                return false;
+            }
+            System.out.print("Opção inválida! Digite 1 ou 2: ");
+            resposta = sc.nextLine().trim();
+        }
+    }
 }
 
