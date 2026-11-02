@@ -1,11 +1,17 @@
 package org.example.cardapio;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class Lanche implements ItemCardapio{
     private String nome;
     private double preco;
+    private boolean queijo = true;
+    private boolean alface = true;
+    private boolean tomate = true;
+    private boolean cebola = true;
 
     public Lanche(String nome, double preco) {
         setNome(nome);
@@ -28,6 +34,12 @@ public class Lanche implements ItemCardapio{
 
     @Override
     public String getDescricao() {
-        return nome;
+        String desc = nome;
+
+        if (!queijo) desc += " sem queijo";
+        if (!alface) desc += " sem alface";
+        if (!tomate) desc += " sem tomate";
+        if (!cebola) desc += " sem cebola";
+        return desc;
     }
 }

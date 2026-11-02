@@ -29,4 +29,8 @@ public class GerenciadorPedidos {
         }
         return totalDoDia;
     }
+
+    public void cancelarPedido(int numero) {
+        pedidos.remove(numero);
+    }
 }
