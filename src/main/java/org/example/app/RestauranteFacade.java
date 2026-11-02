@@ -17,7 +17,7 @@ public class RestauranteFacade {
         return gerenciadorPedidos.criarPedido(nomeCliente);
     }
 
-    void adicionarItemAoPedido(int numeroPedido, ItemCardapio item){
+    public void adicionarItemAoPedido(int numeroPedido, ItemCardapio item){
         Pedido pedido = gerenciadorPedidos.buscarPedido(numeroPedido);
         if (pedido != null) {
             pedido.adicionarItem(item);

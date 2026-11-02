@@ -1,24 +1,29 @@
 package org.example.app;
 
+import org.example.cardapio.ComBaconExtra;
+import org.example.cardapio.ComCheddar;
+import org.example.cardapio.ItemCardapio;
 import org.example.pedido.Pedido;
+
+import java.util.Collection;
 import java.util.Scanner;
 
 public class MenuConsole {
     Scanner sc = new Scanner(System.in);
-    RestauranteFacade restauranteFacade = new RestauranteFacade();
+    RestauranteFacade restauranteFacade;
 
     public MenuConsole(RestauranteFacade facade) {
         this.restauranteFacade = facade;
     }
 
-    public void exibirMenu(){
+    public void exibirMenu() {
         boolean sair = false;
 
         while (!sair) {
             mostrarOpcoesMenu();
-            String opcao = entradaUsuario();
+            String opcao = sc.nextLine();
 
-            switch(opcao){
+            switch (opcao) {
                 case "0":
                     System.out.println("Até logo!");
                     sair = true;
@@ -41,37 +46,24 @@ public class MenuConsole {
         }
     }
 
-    void mostrarOpcoesMenu(){
+    void mostrarOpcoesMenu() {
         System.out.println("=== RESTAURANTE ===");
         System.out.println("1. Registrar novo pedido");
         System.out.println("2. Listar pedidos do dia");
         System.out.println("3. Fechar restaurante");
         System.out.println("0. Sair");
-    }
-
-    String entradaUsuario(){
         System.out.print("Escolha uma opção: ");
-        return sc.nextLine();
     }
 
-    public void cadastrarNovoPedido(){
+    public void cadastrarNovoPedido() {
         System.out.println("Digite o nome do cliente: ");
         String nomeCliente = sc.nextLine();
 
         Pedido pedido = restauranteFacade.criarPedido(nomeCliente);
         System.out.println("Pedido N°" + pedido.getNumero() + " criado.");
 
-        System.out.println("Quer adicionar mais um item?");
-        boolean adicionarMais = true;
-        while (adicionarMais) {
-            int opcaoLanche = sc.nextInt();
-//            ItemCardapio item = criarLanchePelaOpcao(opcaoLanche);
-//            restauranteFacade.adicionarItemAoPedido(pedido.getNumero(), item);
-
-//            String resposta = lerQuerAdicionarMais();
-//            adicionarMais = resposta.equalsIgnoreCase();
-        }
-        //String adicionarItem = sc.nextLine();
+        adicionarItemNoPedido(pedido);
+        exibirPedido(pedido);
 
     }
 
@@ -84,11 +76,102 @@ public class MenuConsole {
         return Integer.parseInt(sc.nextLine());
     }
 
-    void listarPedidosDoDia(){}
+    public void adicionarItemNoPedido(Pedido pedido) {
+        boolean adicionarItem = true;
 
-    void fecharRestaurante(){}
+        while (adicionarItem) {
+            int opcao = mostrarCardapio();
+            ItemCardapio item = criarLanche(opcao);
+            item = perguntarAdicionais(item);
 
-    public void exibirFechamentoDoDia(double total){
-        System.out.println("Fechamento do dia: ");
+            restauranteFacade.adicionarItemAoPedido(pedido.getNumero(), item);
+
+            adicionarItem = perguntarAdicionarMais();
+        }
+    }
+
+    private boolean perguntarAdicionarMais() {
+        while (true) {
+            System.out.print("Deseja adicionar mais um item?\n1- SIM \n2- NÃO: ");
+            String resposta = sc.nextLine().trim();
+
+            switch (resposta) {
+                case "1":
+                    return true;
+                case "2":
+                    return false;
+                default:
+                    System.out.println("Resposta Invalida!");
+            }
+        }
+    }
+
+    void listarPedidosDoDia() {
+        Collection<Pedido> pedidos = restauranteFacade.listarPedidos();
+        if (pedidos.isEmpty()) {
+            System.out.println("Nenhum pedido registrado.");
+        } else {
+            for (Pedido pedido : pedidos) {
+                exibirPedido(pedido);
+            }
+        }
+    }
+
+    void fecharRestaurante() {
+        double total = restauranteFacade.calcularTotalDoDia();
+        exibirFechamentoDoDia(total);
+    }
+
+    public void exibirPedido(Pedido pedido) {
+        System.out.println("\n--- Pedido n°" + pedido.getNumero() + " ---");
+        System.out.println("Cliente: " + pedido.getCliente());
+        for (ItemCardapio item : pedido.getItens()) {
+            System.out.println("- " + item.getDescricao() + " | R$ " + item.getPreco());
+        }
+        System.out.println("Total do pedido: R$ " + pedido.calcularTotal());
+    }
+
+    public void exibirFechamentoDoDia(double total) {
+        System.out.println("\n=== FECHAMENTO DO DIA ===");
+        System.out.println("Total arrecadado: R$ " + total);
+    }
+
+    private ItemCardapio criarLanche(int opcao) {
+        return switch (opcao) {
+            case 1 -> restauranteFacade.criarXBurger();
+            case 2 -> restauranteFacade.criarXSalada();
+            case 3 -> restauranteFacade.criarXBacon();
+            default -> throw new IllegalArgumentException("Opção de lanche inválida");
+        };
+    }
+
+    private ItemCardapio perguntarAdicionais(ItemCardapio item) {
+        System.out.print("Deseja adicionar cheddar?\n1- SIM \n2- NÃO: ");
+        String resposta = sc.nextLine().trim();
+
+        switch (resposta) {
+            case "1":
+            item = new ComCheddar(item);
+            break;
+            case "2":
+                break;
+            default:
+                System.out.println("Resposta Invalida!");
+        }
+
+        System.out.print("Deseja adicionar bacon extra?\n1- SIM \n2- NÃO: ");
+        resposta = sc.nextLine().trim();
+        switch (resposta) {
+            case "1":
+                item = new ComBaconExtra(item);
+                break;
+            case "2":
+                break;
+            default:
+                System.out.println("Resposta Invalida!");
+        }
+
+        return item;
     }
 }
+
