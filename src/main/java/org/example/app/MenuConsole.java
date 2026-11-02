@@ -9,6 +9,7 @@ import org.example.pedido.Pedido;
 import java.util.Collection;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 public class MenuConsole {
     Scanner sc = new Scanner(System.in);
@@ -156,7 +157,9 @@ public class MenuConsole {
 
     void fecharRestaurante() {
         double total = restauranteFacade.calcularTotalDoDia();
-        exibirFechamentoDoDia(total);
+        Set<String> combinacoes = restauranteFacade.getCombinacoesDoDia();
+
+        exibirFechamentoDoDia(total, combinacoes);
     }
 
     public void exibirPedido(Pedido pedido) {
@@ -168,9 +171,17 @@ public class MenuConsole {
         System.out.println("Total do pedido: R$ " + pedido.calcularTotal());
     }
 
-    public void exibirFechamentoDoDia(double total) {
+    public void exibirFechamentoDoDia(double total, Set<String> combinacoes) {
         System.out.println("\n=== FECHAMENTO DO DIA ===");
-        System.out.println("Total arrecadado: R$ " + total);
+        System.out.println("Total arrecadado: R$" + total);
+        System.out.println("Combinações diferentes pedidas: " + combinacoes.size());
+
+        if (!combinacoes.isEmpty()) {
+            System.out.println("Combinações:");
+            for (String combinacao : combinacoes) {
+                System.out.println("- " + combinacao);
+            }
+        }
     }
 
     private Lanche criarLanche(int opcao) {

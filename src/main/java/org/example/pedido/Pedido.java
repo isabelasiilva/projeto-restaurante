@@ -14,7 +14,7 @@ public class Pedido {
     private int numero;
     private String cliente;
 
-    ArrayList<ItemCardapio> itens = new ArrayList<>();
+    private ArrayList<ItemCardapio> itens = new ArrayList<>();
 
     public Pedido(int numero, String cliente) {
         this.numero = numero;

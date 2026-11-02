@@ -1,7 +1,5 @@
 package org.example.app;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.example.cardapio.ItemCardapio;
 import org.example.cardapio.Lanche;
 import org.example.cardapio.factory.LancheFactory;
@@ -9,14 +7,13 @@ import org.example.pedido.GerenciadorPedidos;
 import org.example.pedido.Pedido;
 
 import java.util.Collection;
+import java.util.Set;
 
-@Getter
-@Setter
 public class RestauranteFacade {
     //coordena as operações, recebe os pedidos de MenuConsole
     // chama GerenciadorPedidos ou LancheFactory e devolve os resultados
 
-    GerenciadorPedidos gerenciadorPedidos = new GerenciadorPedidos();
+    private GerenciadorPedidos gerenciadorPedidos = new GerenciadorPedidos();
 
     public Pedido criarPedido(String nomeCliente) {
         return gerenciadorPedidos.criarPedido(nomeCliente);
@@ -39,6 +36,10 @@ public class RestauranteFacade {
 
     public Pedido buscarPedido(int numero) {
         return gerenciadorPedidos.buscarPedido(numero);
+    }
+
+    public Set<String> getCombinacoesDoDia() {
+        return gerenciadorPedidos.getCombinacoesDoDia();
     }
 
     public void removerItemDoPedido(int numeroPedido, int indiceItem) {
