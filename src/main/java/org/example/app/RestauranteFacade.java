@@ -1,12 +1,17 @@
 package org.example.app;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.example.cardapio.ItemCardapio;
+import org.example.cardapio.Lanche;
 import org.example.cardapio.factory.LancheFactory;
 import org.example.pedido.GerenciadorPedidos;
 import org.example.pedido.Pedido;
 
 import java.util.Collection;
 
+@Getter
+@Setter
 public class RestauranteFacade {
     //coordena as operações, recebe os pedidos de MenuConsole
     // chama GerenciadorPedidos ou LancheFactory e devolve os resultados
@@ -17,7 +22,7 @@ public class RestauranteFacade {
         return gerenciadorPedidos.criarPedido(nomeCliente);
     }
 
-    void adicionarItemAoPedido(int numeroPedido, ItemCardapio item){
+    public void adicionarItemAoPedido(int numeroPedido, ItemCardapio item){
         Pedido pedido = gerenciadorPedidos.buscarPedido(numeroPedido);
         if (pedido != null) {
             pedido.adicionarItem(item);
@@ -32,15 +37,26 @@ public class RestauranteFacade {
         return gerenciadorPedidos.calcularTotalDoDia();
     }
 
-    public ItemCardapio criarXBurger() {
+    public void removerItemDoPedido(int numeroPedido, int indiceItem) {
+        Pedido pedido = gerenciadorPedidos.buscarPedido(numeroPedido);
+        if (pedido != null) {
+            pedido.removerItem(indiceItem);
+        }
+    }
+
+    public void cancelarPedido(int numeroPedido) {
+        gerenciadorPedidos.cancelarPedido(numeroPedido);
+    }
+
+    public Lanche criarXBurger() {
         return LancheFactory.xBurger();
     }
 
-    public ItemCardapio criarXSalada() {
+    public Lanche criarXSalada() {
         return LancheFactory.xSalada();
     }
 
-    public ItemCardapio criarXBacon() {
+    public Lanche criarXBacon() {
         return LancheFactory.xBacon();
     }
 }

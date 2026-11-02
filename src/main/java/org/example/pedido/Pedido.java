@@ -37,6 +37,12 @@ public class Pedido {
         return total;
     }
 
+    public void removerItem(int indice) {
+        if (indice >= 0 && indice < itens.size()) {
+            itens.remove(indice);
+        }
+    }
+
     public void setCliente(String cliente) {
         if (cliente == null || cliente.trim().isEmpty()){
             throw new IllegalArgumentException("Nome inválido: não pode ser nulo ou vazio");
