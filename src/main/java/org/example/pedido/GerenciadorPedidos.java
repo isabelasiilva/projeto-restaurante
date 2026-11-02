@@ -14,12 +14,8 @@ public class GerenciadorPedidos {
         return novo;
     }
 
-    public void buscarPedido(int numero) {
-        if (pedidos.containsKey(numero)) {
-            System.out.println(pedidos.get(numero));
-        } else {
-            System.out.println("Número não registrado!");
-        }
+    public Pedido buscarPedido(int numero) {
+        return pedidos.get(numero); // se nao existir retorna null
     }
 
     public HashMap<Integer, Pedido> getPedidos() {
