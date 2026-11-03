@@ -79,7 +79,6 @@ public class MenuConsole {
         System.out.println("1. X-Burger — R$ 16,00");
         System.out.println("2. X-Salada — R$ 18,00");
         System.out.println("3. X-Bacon  — R$ 22,00");
-//        System.out.print("Escolha o lanche: ");
 
         while (true) {
             int opcaoLanche = lerInteiroTratandoErro("Escolha o lanche: ");
@@ -155,6 +154,7 @@ public class MenuConsole {
         }
     }
 
+    // calcula o total do dia
     void fecharRestaurante() {
         double total = restauranteFacade.calcularTotalDoDia();
         Set<String> combinacoes = restauranteFacade.getCombinacoesDoDia();

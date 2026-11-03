@@ -2,6 +2,8 @@
 
 Primeiro projeto do bootcamp **ElasTech da SoulCode**: um sistema console para gerenciamento de um restaurante que serve lanches.
 
+**Video de apresentação:** https://youtu.be/q7LnqNu1Y34
+
 ## Funções do sistema:
 
 - **Cardápio:** exibir os lanches disponíveis (X-Burger, X-Salada e X-Bacon).
